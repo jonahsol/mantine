@@ -78,7 +78,7 @@ export interface MultiSelectProps
   getCreateLabel?(query: string): React.ReactNode;
 
   /** Function to determine if create label should be displayed */
-  shouldCreate?(query: string, data: SelectItem[]): boolean;
+  shouldCreate?(query: string, data: SelectItem[], filteredData: SelectItem[]): boolean;
 
   /** Called when create option is selected */
   onCreate?(query: string): SelectItem | string | null | undefined;
@@ -572,7 +572,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     }
   };
 
-  if (isCreatable && shouldCreate(_searchValue, sortedData)) {
+  if (isCreatable && shouldCreate(_searchValue, sortedData, filteredData)) {
     createLabel = getCreateLabel(_searchValue);
     filteredData.push({ label: _searchValue, value: _searchValue, creatable: true });
   }
